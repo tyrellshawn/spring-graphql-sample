@@ -1,0 +1,70 @@
+class PricingModel {
+  int modelId;
+  String name;
+  String description;
+  * -- 1 FlatFeeModel;
+  * -- 1 PayPerUseModel;
+}
+
+class FlatFeeModel {
+  float feeAmount;
+}
+
+class PayPerUseModel {
+  float usageCost;
+}
+
+class PaymentSystem {
+  int paymentId;
+  String name;
+  String description;
+  * -- * User;
+  * -- 1 Pricing;
+}
+
+class User {
+  int userId;
+  String name;
+  String email;
+  * -- 1 PaymentSystem;
+}
+
+class API {
+  int apiId;
+  String name;
+  String description;
+  * -- 1 PricingModel;
+  * -- 1 Monitoring;
+  * -- 1 Usage;
+}
+
+class Usage {
+  int usageId;
+  DateTime timestamp;
+  int usageCount;
+  
+}
+
+class Pricing {
+  int pricingId;
+  float price;
+  DateTime validFrom;
+  DateTime validUntil;
+  * -- 1 Usage;
+}
+
+class Monitoring {
+  int monitoringId;
+  DateTime timestamp;
+  int usageCount;
+}
+
+PricingModel * -- 1 FlatFeeModel;
+PricingModel * -- 1 PayPerUseModel;
+API * -- 1 PricingModel;
+PaymentSystem * -- * User;
+PaymentSystem * -- 1 Pricing;
+User * -- 1 PaymentSystem;
+API * -- 1 Usage;
+Pricing * -- 1 Usage;
+API * -- 1 Monitoring;
